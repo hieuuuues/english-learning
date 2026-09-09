@@ -611,6 +611,132 @@
           padding: 0.75rem 1rem;
         }
       }
+      /* ── PREMIUM VISUAL REFINEMENT (presentation only) ── */
+      :root {
+        --bg: #f5f7ff;
+        --surface: #ffffff;
+        --surface-subtle: #f8faff;
+        --text: #172033;
+        --text-muted: #69738a;
+        --border: #e1e6f2;
+        --accent: #5267e8;
+        --accent-light: #eef0ff;
+        --radius: 18px;
+        --radius-sm: 12px;
+        --shadow-sm: 0 1px 2px rgba(18, 31, 61, .04), 0 5px 14px rgba(35, 55, 99, .04);
+        --shadow: 0 15px 34px rgba(53, 73, 126, .10), 0 2px 5px rgba(25, 42, 80, .04);
+      }
+
+      body {
+        background:
+          radial-gradient(circle at 8% -10%, rgba(112, 132, 246, .18), transparent 30rem),
+          radial-gradient(circle at 100% 4%, rgba(135, 216, 205, .12), transparent 28rem),
+          var(--bg);
+        padding-bottom: 5rem;
+      }
+      .header {
+        background: rgba(255, 255, 255, .78);
+        border-color: rgba(220, 226, 241, .9);
+        padding: 1rem max(1.5rem, calc((100vw - 1160px) / 2));
+        box-shadow: 0 1px 0 rgba(24, 38, 72, .03);
+      }
+      .header h1 { font-size: 1.2rem; letter-spacing: -.04em; }
+      .icon-btn {
+        border-radius: 11px;
+        box-shadow: 0 1px 2px rgba(25, 42, 80, .04);
+      }
+      .icon-btn:hover { transform: translateY(-1px); }
+      .container { max-width: 960px; padding: 2rem 1.35rem; }
+      .vocabulary-cards { gap: 1rem; }
+      .vocabulary-card {
+        position: relative;
+        overflow: hidden;
+        padding: 1.25rem;
+        gap: 1rem;
+        border-color: rgba(220, 226, 241, .95);
+        box-shadow: var(--shadow-sm);
+      }
+      .vocabulary-card::before {
+        content: "";
+        position: absolute;
+        inset: 0 auto 0 0;
+        width: 3px;
+        background: transparent;
+        transition: background .2s ease;
+      }
+      .vocabulary-card:hover { border-color: #ced6f6; box-shadow: var(--shadow); }
+      .vocabulary-card:focus-within { border-color: #aebaf7; box-shadow: 0 0 0 4px rgba(82, 103, 232, .08), var(--shadow); }
+      .vocabulary-card:focus-within::before, .vocabulary-card.translating::before { background: var(--accent); }
+      .vocabulary-card.translating { background: linear-gradient(100deg, #fff, #f9faff); }
+      .card-number {
+        margin-top: 1.65rem;
+        min-width: 38px;
+        padding: 4px 7px;
+        border-radius: 8px;
+        color: #6370a0;
+        background: #f2f5ff;
+        border-color: #e1e7fb;
+      }
+      .form-group-grid { grid-template-columns: minmax(170px, 1.25fr) minmax(210px, 1.7fr) minmax(135px, .85fr); gap: .9rem; }
+      .form-group { gap: .43rem; }
+      .form-group label { color: #737e96; font-size: .68rem; }
+      .form-group input {
+        min-height: 43px;
+        padding: 10px 13px;
+        border-color: #dfe5f1;
+        background: var(--surface-subtle);
+        border-radius: 11px;
+      }
+      .word-input { font-weight: 700; color: #1b2850 !important; font-size: 15px !important; }
+      .ipa-input { font-family: Georgia, "Times New Roman", serif !important; letter-spacing: .025em; color: #4b5791 !important; background: #f5f6ff !important; }
+      .form-group input:hover { border-color: #bdc8ec; }
+      .form-group input.translating-field { background: linear-gradient(90deg, #f0f2ff, #fafbff); }
+      .card-controls { gap: .6rem; padding-top: .42rem; }
+      .image-upload-wrap, .image-preview { width: 48px; height: 48px; }
+      .image-preview { border-radius: 13px; border-color: #cfd8ee; background: #f7f9ff; }
+      .image-preview:hover { box-shadow: 0 4px 12px rgba(82, 103, 232, .12); }
+      .delete-btn { border-radius: 10px; background: #fbfcff; border: 1px solid #edf0f6; }
+      .delete-btn:hover { border-color: #ffd8d8; }
+      .translate-status { padding: 3px 0; }
+      .toolbar {
+        width: min(930px, calc(100% - 2rem));
+        margin: 1.4rem auto 0;
+        bottom: 1rem;
+        border: 1px solid rgba(220, 226, 241, .9);
+        border-radius: 16px;
+        padding: .7rem;
+        background: rgba(255, 255, 255, .82);
+        box-shadow: 0 12px 35px rgba(35, 52, 96, .13);
+      }
+      .btn { min-height: 40px; border-radius: 11px; padding: 9px 16px; }
+      .btn-ghost { background: rgba(255,255,255,.72); }
+      .btn-ghost:hover { background: #f2f4ff; border-color: #bec9f3; color: #394fc7; }
+      .btn-primary { background: linear-gradient(135deg, #6275ed, #485edc); box-shadow: 0 5px 14px rgba(72, 94, 220, .25); }
+      .btn-primary:hover { background: linear-gradient(135deg, #566be8, #3f55d3); }
+      .modal-overlay { background: rgba(17, 28, 55, .44); }
+      .modal-box { border-radius: 20px; padding: 1.8rem; border-color: rgba(229, 233, 243, .95); box-shadow: 0 24px 70px rgba(11, 22, 49, .24); }
+      .modal-box h2 { color: #1b2742; letter-spacing: -.025em; font-size: 1.25rem; }
+      .modal-field input, .modal-field select, .modal-field textarea { background: var(--surface-subtle); border-color: #dfe5f1; border-radius: 11px; }
+      .setting-row { padding: 1rem 0; }
+      .notification { border: 1px solid rgba(255,255,255,.18); box-shadow: 0 15px 35px rgba(16, 24, 40, .2); }
+      @media (max-width: 640px) {
+        body { padding-bottom: 5.5rem; }
+        .header { padding: .78rem 1rem; }
+        .header h1 { font-size: 1rem; }
+        .container { padding: 1rem .78rem 1.4rem; }
+        .vocabulary-card { padding: 1rem; gap: .65rem; align-items: stretch; }
+        .card-number { margin-top: 1.35rem; min-width: 32px; padding: 3px 4px; }
+        .form-group-grid { grid-template-columns: 1fr 1fr; gap: .65rem; }
+        .form-group-grid .form-group:nth-child(1) { grid-column: 1 / -1; }
+        .form-group input { min-height: 42px; padding: 9px 10px; }
+        .card-controls { padding-top: 1.3rem; gap: .42rem; }
+        .image-upload-wrap, .image-preview { width: 42px; height: 42px; }
+        .toolbar { width: calc(100% - 1rem); bottom: .5rem; margin-top: .8rem; gap: .45rem; justify-content: stretch; }
+        .toolbar .btn { flex: 1 1 calc(50% - .3rem); padding: 8px 7px; font-size: 12px; }
+        .modal-overlay { padding: .65rem; align-items: flex-end; }
+        .modal-box { max-height: calc(100vh - 1.3rem); overflow: auto; padding: 1.35rem; border-radius: 18px; }
+        .notification { right: .75rem; bottom: 5.6rem; left: .75rem; max-width: none; }
+      }
     </style>
   </head>
   <body>
@@ -796,6 +922,7 @@
       let currentFolderId = null;
       let isAutoTranslate = true;
       let translateTimers = {}; // debounce per card
+      const translationRequestVersions = new Map();
       let activeBulk = false; // prevent double submit
 
       /* =========================================================
@@ -949,111 +1076,244 @@
       }
 
       /* =========================================================
-   DEDICATED TRANSLATION & IPA API (ULTRA-FAST & STABLE)
+   TRANSLATION & PRONUNCIATION SERVICES
+   The chat proxy keeps provider credentials off the client. Its /api/pronunciation
+   route is optional: it can be backed by a licensed dictionary provider in production.
    ========================================================= */
-      async function translateWord(word) {
-        if (!word || !word.trim()) return "";
-        const url = `https://translate.googleapis.com/translate_a/single?client=gtx&sl=en&tl=vi&dt=t&q=${encodeURIComponent(word.trim())}`;
-        try {
-          const res = await fetch(url);
-          if (!res.ok) return "";
-          const json = await res.json();
-          if (json && json[0]) {
-            return json[0]
-              .map((item) => item[0])
-              .join("")
-              .trim();
-          }
-        } catch (e) {
-          console.error("Dịch thuật gặp lỗi:", e);
-        }
-        return "";
+      const TRANSLATION_CACHE = new Map();
+      const IPA_CACHE = new Map();
+      const translationInFlight = new Map();
+      const ipaInFlight = new Map();
+      let pronunciationProxyAvailable = null;
+      const PRONUNCIATION_PROXY_URL = new URL(
+        "/api/pronunciation",
+        new URL(WORKER_URL).origin,
+      ).href;
+
+      function normalizeWord(word) {
+        return String(word || "").trim().replace(/\s+/g, " ").toLowerCase();
       }
 
-      // Hàm lấy IPA cho một từ riêng lẻ với các biến thể đuôi nâng cao (tránh 404 hoàn toàn)
-      async function getSingleWordIPA(word) {
-        const cleanWord = word.replace(/^[^a-zA-Z0-9]+|[^a-zA-Z0-9]+$/g, "");
-        if (!cleanWord) return "";
+      function isTransient(error) {
+        return error?.name === "AbortError" || error?.status === 429 || error?.status >= 500 || error?.name === "TypeError";
+      }
 
-        const attempts = [cleanWord];
-
-        // Xử lý các dạng từ số nhiều và động từ chia để tìm từ gốc tốt hơn
-        if (cleanWord.endsWith("ies")) {
-          attempts.push(cleanWord.slice(0, -3) + "y");
-        } else if (cleanWord.endsWith("es")) {
-          attempts.push(cleanWord.slice(0, -2)); // ví dụ: boxes -> box
-          attempts.push(cleanWord.slice(0, -1)); // ví dụ: apples -> apple
-        } else if (cleanWord.endsWith("s") && !cleanWord.endsWith("ss")) {
-          attempts.push(cleanWord.slice(0, -1));
-        }
-
-        if (cleanWord.endsWith("ied")) {
-          attempts.push(cleanWord.slice(0, -3) + "y"); // ví dụ: studied -> study
-        } else if (cleanWord.endsWith("ed")) {
-          attempts.push(cleanWord.slice(0, -2)); // ví dụ: played -> play
-          attempts.push(cleanWord.slice(0, -1)); // ví dụ: danced -> dance
-        }
-
-        if (cleanWord.endsWith("ing")) {
-          attempts.push(cleanWord.slice(0, -3)); // ví dụ: going -> go
-          attempts.push(cleanWord.slice(0, -3) + "e"); // ví dụ: making -> make
-        }
-
-        for (const target of attempts) {
-          if (!target) continue;
-          const url = `https://api.dictionaryapi.dev/api/v2/entries/en/${encodeURIComponent(target)}`;
+      async function fetchJson(url, options = {}, timeout = 7000, retries = 1) {
+        let lastError;
+        for (let attempt = 0; attempt <= retries; attempt++) {
+          const controller = new AbortController();
+          const timer = setTimeout(() => controller.abort(), timeout);
           try {
-            const res = await fetch(url);
-            if (res.ok) {
-              const json = await res.json();
-              if (Array.isArray(json) && json.length > 0) {
-                for (const entry of json) {
-                  if (entry.phonetic && entry.phonetic.trim())
-                    return entry.phonetic.trim();
-                  if (entry.phonetics && Array.isArray(entry.phonetics)) {
-                    for (const p of entry.phonetics) {
-                      if (p.text && p.text.trim()) {
-                        return p.text.trim();
-                      }
-                    }
-                  }
-                }
-              }
+            const response = await fetch(url, { ...options, signal: controller.signal });
+            if (!response.ok) {
+              const error = new Error(`HTTP ${response.status}`);
+              error.status = response.status;
+              throw error;
             }
-          } catch (e) {
-            console.warn("Lỗi fetch IPA của từ:", target, e);
+            return await response.json();
+          } catch (error) {
+            lastError = error;
+            if (attempt === retries || !isTransient(error)) break;
+            await sleep(250 * (attempt + 1));
+          } finally {
+            clearTimeout(timer);
+          }
+        }
+        throw lastError || new Error("Request failed");
+      }
+
+      function parseProxyContent(data) {
+        const content = data?.choices?.[0]?.message?.content;
+        if (typeof content === "object" && content) return content;
+        if (typeof content !== "string") return data || {};
+        try {
+          return JSON.parse(content.replace(/```json|```/gi, "").trim());
+        } catch {
+          return {};
+        }
+      }
+
+      function cleanMeaning(value) {
+        if (typeof value !== "string") return "";
+        const meaning = value.replace(/<[^>]*>/g, "").replace(/\s+/g, " ").trim();
+        return meaning.length <= 240 && !/[{}[\]]/.test(meaning) ? meaning : "";
+      }
+
+      async function requestTranslation(word) {
+        const data = await fetchJson(
+          WORKER_URL,
+          {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+              model: GPT_MODEL,
+              messages: [
+                {
+                  role: "system",
+                  content:
+                    "You are an English-to-Vietnamese lexicographer. Return only valid JSON: {\\\"meaning\\\": string}. Translate the exact English word or phrase naturally and concisely into Vietnamese. Preserve the intended part of speech when clear. Do not add definitions, labels, markdown, alternatives, or punctuation around the answer.",
+                },
+                { role: "user", content: word },
+              ],
+              temperature: 0,
+              response_format: { type: "json_object" },
+              max_tokens: 100,
+            }),
+          },
+          8000,
+          1,
+        );
+        const result = parseProxyContent(data);
+        return cleanMeaning(result.meaning || result.translation || data?.meaning || data?.translation);
+      }
+
+      async function translateWord(word) {
+        const key = normalizeWord(word);
+        if (!key) return "";
+        if (TRANSLATION_CACHE.has(key)) return TRANSLATION_CACHE.get(key);
+        if (translationInFlight.has(key)) return translationInFlight.get(key);
+
+        const request = requestTranslation(key)
+          .catch((error) => {
+            console.warn("Translation unavailable:", error.message);
+            return "";
+          })
+          .then((meaning) => {
+            if (meaning) TRANSLATION_CACHE.set(key, meaning);
+            return meaning;
+          })
+          .finally(() => translationInFlight.delete(key));
+        translationInFlight.set(key, request);
+        return request;
+      }
+
+      function cleanIPA(value) {
+        if (typeof value !== "string") return "";
+        let ipa = value
+          .replace(/<[^>]*>/g, "")
+          .replace(/^(?:ipa|phonetic|pronunciation|uk|us)\s*:\s*/i, "")
+          .trim();
+        if (!ipa || ipa.length > 100 || /[{}[\]]/.test(ipa)) return "";
+        ipa = ipa.replace(/^\/+|\/+$/g, "").replace(/\s+/g, " ").trim();
+        return ipa ? `/${ipa}/` : "";
+      }
+
+      function pronunciationCandidates(word) {
+        const clean = word.replace(/^[^a-z0-9]+|[^a-z0-9]+$/gi, "");
+        const candidates = [clean];
+        if (clean.endsWith("ies")) candidates.push(clean.slice(0, -3) + "y");
+        else if (clean.endsWith("es")) candidates.push(clean.slice(0, -2), clean.slice(0, -1));
+        else if (clean.endsWith("s") && !clean.endsWith("ss")) candidates.push(clean.slice(0, -1));
+        if (clean.endsWith("ied")) candidates.push(clean.slice(0, -3) + "y");
+        else if (clean.endsWith("ed")) candidates.push(clean.slice(0, -2), clean.slice(0, -1));
+        if (clean.endsWith("ing")) candidates.push(clean.slice(0, -3), clean.slice(0, -3) + "e");
+        return [...new Set(candidates.filter(Boolean))];
+      }
+
+      async function requestProxyIPA(word) {
+        if (pronunciationProxyAvailable === false) {
+          throw new Error("Pronunciation proxy is unavailable");
+        }
+        try {
+          const data = await fetchJson(
+            `${PRONUNCIATION_PROXY_URL}?word=${encodeURIComponent(word)}`,
+            { headers: { Accept: "application/json" } },
+            4500,
+            1,
+          );
+          pronunciationProxyAvailable = true;
+          // Keep one IPA field compatible with existing cards; use UK when supplied.
+          return cleanIPA(data?.uk || data?.ipa || data?.phonetic || data?.us);
+        } catch (error) {
+          // A project without the optional endpoint should not generate one 404 per word.
+          if (error?.status === 404 || error?.status === 401 || error?.status === 403) {
+            pronunciationProxyAvailable = false;
+          }
+          throw error;
+        }
+      }
+
+      async function requestDictionaryIPA(word) {
+        const data = await fetchJson(
+          `https://api.dictionaryapi.dev/api/v2/entries/en/${encodeURIComponent(word)}`,
+          { headers: { Accept: "application/json" } },
+          5000,
+          1,
+        );
+        if (!Array.isArray(data)) return "";
+        for (const entry of data) {
+          const phonetics = Array.isArray(entry.phonetics) ? entry.phonetics : [];
+          const ordered = [
+            ...phonetics.filter((item) => /en[-_]?(gb|uk)/i.test(item.audio || "")),
+            ...phonetics.filter((item) => item.text),
+            ...phonetics.filter((item) => /en[-_]?us/i.test(item.audio || "")),
+          ];
+          for (const phonetic of ordered) {
+            const ipa = cleanIPA(phonetic?.text);
+            if (ipa) return ipa;
+          }
+          const ipa = cleanIPA(entry.phonetic);
+          if (ipa) return ipa;
+        }
+        return "";
+      }
+
+      async function getSingleWordIPA(word) {
+        for (const candidate of pronunciationCandidates(word)) {
+          try {
+            const ipa = await requestProxyIPA(candidate);
+            if (ipa) return ipa;
+          } catch {
+            // The proxy is optional locally; use the public dictionary as a graceful fallback.
+          }
+          try {
+            const ipa = await requestDictionaryIPA(candidate);
+            if (ipa) return ipa;
+          } catch {
+            // Try an inflection/base-form candidate without surfacing a disruptive UI error.
           }
         }
         return "";
       }
 
-      // Hàm lấy IPA tổng thể, hỗ trợ phân tách cụm từ thành các từ riêng lẻ
       async function getIPA(word) {
-        if (!word || !word.trim()) return "";
-        const normalized = word.trim().toLowerCase();
+        const key = normalizeWord(word);
+        if (!key) return "";
+        if (IPA_CACHE.has(key)) return IPA_CACHE.get(key);
+        if (ipaInFlight.has(key)) return ipaInFlight.get(key);
 
-        // Nếu là cụm từ, tách ra lấy IPA từng từ rồi nối lại với nhau
-        if (normalized.includes(" ")) {
-          const words = normalized.split(/\s+/);
-          const ipas = await Promise.all(words.map((w) => getSingleWordIPA(w)));
-          const combined = ipas.filter((i) => i).join(" ");
-          return combined ? combined : "";
-        }
-
-        return await getSingleWordIPA(normalized);
+        const request = (async () => {
+          let ipa = "";
+          try { ipa = await requestProxyIPA(key); } catch {}
+          if (!ipa && key.includes(" ")) {
+            const parts = await Promise.all(key.split(" ").map(getSingleWordIPA));
+            ipa = parts.filter(Boolean).join(" ");
+          }
+          if (!ipa) ipa = await getSingleWordIPA(key);
+          return cleanIPA(ipa);
+        })()
+          .catch((error) => {
+            console.warn("Pronunciation unavailable:", error.message);
+            return "";
+          })
+          .then((ipa) => {
+            if (ipa) IPA_CACHE.set(key, ipa);
+            return ipa;
+          })
+          .finally(() => ipaInFlight.delete(key));
+        ipaInFlight.set(key, request);
+        return request;
       }
 
       async function fetchTranslationAndIPA(word) {
-        try {
-          const [meaning, ipa] = await Promise.all([
-            translateWord(word),
-            getIPA(word),
-          ]);
-          return { meaning, ipa };
-        } catch (e) {
-          console.error("Composite API error:", e);
-          return { meaning: "", ipa: "" };
-        }
+        const [translation, pronunciation] = await Promise.allSettled([
+          translateWord(word),
+          getIPA(word),
+        ]);
+        return {
+          meaning: translation.status === "fulfilled" ? translation.value : "",
+          ipa: pronunciation.status === "fulfilled" ? pronunciation.value : "",
+        };
       }
 
       /* =========================================================
@@ -1088,6 +1348,9 @@
         if (!card) return;
         const word = input.value.trim();
         if (!word) return;
+        const requestVersion = (translationRequestVersions.get(cardId) || 0) + 1;
+        translationRequestVersions.set(cardId, requestVersion);
+        const requestedWord = normalizeWord(word);
 
         const meaningInput = card.querySelector(".meaning-input");
         const ipaInput = card.querySelector(".ipa-input");
@@ -1100,12 +1363,18 @@
 
         try {
           const { meaning, ipa } = await fetchTranslationAndIPA(word);
+          // Ignore a late response for an older Enter press or a changed word.
+          if (
+            translationRequestVersions.get(cardId) !== requestVersion ||
+            normalizeWord(input.value) !== requestedWord
+          ) return;
           if (!meaningInput.value.trim()) meaningInput.value = meaning || "";
           if (!ipaInput.value.trim()) ipaInput.value = ipa || "";
           saveDraftDebounced();
         } catch (e) {
           console.warn("Translate error:", e.message);
         } finally {
+          if (translationRequestVersions.get(cardId) !== requestVersion) return;
           card.classList.remove("translating");
           meaningInput.classList.remove("translating-field");
           ipaInput.classList.remove("translating-field");
