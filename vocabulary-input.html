@@ -863,14 +863,14 @@
       <div class="modal-box">
         <h2>Nhập hàng loạt</h2>
         <p class="modal-desc">
-          Mỗi dòng một từ tiếng Anh. AI sẽ tự động dịch và điền IPA cho từng từ.
-          Tối đa 30 từ mỗi lần.
+          Mỗi dòng theo định dạng: Tiếng Anh - Tiếng Việt - IPA.
+          Không giới hạn số lượng từ mỗi lần nhập.
         </p>
         <div class="modal-field">
           <label>Danh sách từ</label>
           <textarea
             id="bulkText"
-            placeholder="serendipity&#10;ephemeral&#10;ubiquitous&#10;resilience"
+            placeholder="serendipity - sự tình cờ - /ˌser.ənˈdɪp.ə.ti/&#10;ephemeral - phù du, ngắn ngủi - /ɪˈfem.ər.əl/&#10;ubiquitous - phổ biến ở khắp nơi - /juːˈbɪk.wɪ.təs/&#10;resilience - khả năng phục hồi - /rɪˈzɪliəns/"
           ></textarea>
         </div>
         <div class="bulk-progress" id="bulkProgress">
@@ -1415,23 +1415,48 @@
       }
 
       /* =========================================================
-   BULK INPUT – batch 5 từ song song, tốc độ cực nhanh & ổn định
+   BULK INPUT – English - Vietnamese - IPA, unlimited lines
    ========================================================= */
+      function parseBulkLine(line) {
+        const text = String(line || "").trim();
+        if (!text) return null;
+
+        // IPA is always the final field. Split only on delimiters
+        // surrounded by whitespace so hyphens inside English words
+        // such as "state-of-the-art" are preserved.
+        const parts = text.split(/\s+-\s+/);
+        if (parts.length < 3) return null;
+
+        const ipa = parts.pop().trim();
+        const english = parts.shift().trim();
+        const vietnamese = parts.join(" - ").trim();
+
+        if (!english || !vietnamese || !ipa) return null;
+        return { word: english, meaning: vietnamese, ipa };
+      }
+
       async function processBulkInput() {
         if (activeBulk) return;
 
-        const raw = document.getElementById("bulkText").value.trim();
-        const words = [
-          ...new Set(
-            raw
-              .split("\n")
-              .map((w) => w.trim())
-              .filter((w) => w.length > 0),
-          ),
-        ].slice(0, 30);
+        const raw = document.getElementById("bulkText").value;
+        const lines = raw.split(/\r?\n/);
+        const validResults = [];
+        const invalidLines = [];
 
-        if (!words.length) {
-          notify("Chưa nhập từ nào.", "warning");
+        lines.forEach((line, index) => {
+          if (!line.trim()) return;
+          const parsed = parseBulkLine(line);
+          if (parsed) validResults.push(parsed);
+          else invalidLines.push(index + 1);
+        });
+
+        if (!lines.some((line) => line.trim())) {
+          notify("Chưa nhập dữ liệu.", "warning");
+          return;
+        }
+
+        if (!validResults.length) {
+          notify("Không tìm thấy dòng hợp lệ. Hãy sử dụng định dạng: English - Vietnamese - IPA", "warning");
           return;
         }
 
@@ -1441,49 +1466,13 @@
         btn.disabled = true;
         cancel.disabled = true;
         btn.innerHTML =
-          '<div class="mini-spin" style="width:14px;height:14px;border-width:2px;display:inline-block;"></div> Đang xử lý...';
+          '<div class="mini-spin" style="width:14px;height:14px;border-width:2px;display:inline-block;"></div> Đang nhập...';
 
         const progress = document.getElementById("bulkProgress");
         const fill = document.getElementById("bulkProgressFill");
         const label = document.getElementById("bulkProgressLabel");
         const pct = document.getElementById("bulkProgressPct");
         progress.classList.add("visible");
-
-        let done = 0;
-        const results = new Array(words.length).fill(null);
-
-        const updateProgress = () => {
-          const p = Math.round((done / words.length) * 100);
-          fill.style.width = p + "%";
-          pct.textContent = p + "%";
-          label.textContent = `Đã dịch ${done}/${words.length} từ...`;
-        };
-        updateProgress();
-
-        const BATCH = 5;
-        for (let i = 0; i < words.length; i += BATCH) {
-          const slice = words.slice(i, i + BATCH);
-          await Promise.all(
-            slice.map(async (word, offset) => {
-              const idx = i + offset;
-              try {
-                const data = await fetchTranslationAndIPA(word);
-                results[idx] = {
-                  word,
-                  meaning: data.meaning || "",
-                  ipa: data.ipa || "",
-                };
-              } catch {
-                results[idx] = { word, meaning: "", ipa: "" };
-              }
-              done++;
-              updateProgress();
-            }),
-          );
-        }
-
-        fill.classList.add("done");
-        label.textContent = `Hoàn tất! Đang thêm ${results.length} thẻ...`;
 
         const existing = document.querySelectorAll(".vocabulary-card");
         if (
@@ -1493,13 +1482,47 @@
           existing[0].remove();
         }
 
-        results.forEach((r) => {
-          if (r) addCard(r, false);
-        });
+        // No translation/IPA API calls: all three values come directly
+        // from the user's input. Process in small chunks so large imports
+        // remain responsive without imposing an artificial limit.
+        const CHUNK_SIZE = 50;
+        let done = 0;
+        const total = validResults.length;
+
+        const updateProgress = () => {
+          const percent = Math.round((done / total) * 100);
+          fill.style.width = percent + "%";
+          pct.textContent = percent + "%";
+          label.textContent = `Đang nhập ${done}/${total} từ...`;
+        };
+
+        updateProgress();
+
+        for (let i = 0; i < total; i += CHUNK_SIZE) {
+          const chunk = validResults.slice(i, i + CHUNK_SIZE);
+          chunk.forEach((data) => {
+            addCard(data, false);
+            done++;
+          });
+          updateProgress();
+          if (i + CHUNK_SIZE < total) {
+            await new Promise((resolve) => requestAnimationFrame(resolve));
+          }
+        }
+
         updateNumbers();
         await saveDraft();
 
-        notify(`Đã thêm ${results.length} từ thành công!`, "success");
+        fill.classList.add("done");
+        label.textContent = `Hoàn tất! Đã thêm ${validResults.length} thẻ.`;
+        pct.textContent = "100%";
+
+        let message = `Đã thêm ${validResults.length} thẻ thành công!`;
+        if (invalidLines.length) {
+          message += ` ${invalidLines.length} dòng không hợp lệ (dòng: ${invalidLines.join(", ")}).`;
+        }
+        notify(message, invalidLines.length ? "warning" : "success");
+
         hideModal("bulkModal");
 
         activeBulk = false;
